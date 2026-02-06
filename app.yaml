@@ -1,0 +1,20 @@
+services:
+  s3app:
+    image: nginx:alpine
+    container_name: 68-s3-app 
+    restart: unless-stopped
+    ports:
+      - "${APP_PORT}:80"
+    networks:
+      - my-network
+
+# ส่วนนี้ใช้เพื่อป้องกัน Hacker แก้ไขไฟล์ใน Container 
+    read_only: true
+    tmpfs:
+      - /var/cache/nginx
+      - /var/run
+      - /tmp
+
+networks:
+  my-network:
+    driver: bridge
